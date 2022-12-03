@@ -54,14 +54,11 @@ impl Pick {
     }
 
     fn score_against(&self, other: &Pick) -> i32 {
-        if self == other {
-            return 3;
-        }
-
         match (self, other) {
             (Pick::Rock, Pick::Scissors) => 6,
             (Pick::Paper, Pick::Rock) => 6,
             (Pick::Scissors, Pick::Paper) => 6,
+            (a, b) if a == b => 3,
             _ => 0,
         }
     }
@@ -69,13 +66,11 @@ impl Pick {
     fn pick_against_for_advice(&self, advice: &MatchAdvice) -> Pick {
         match advice {
             MatchAdvice::Draw => self.clone(),
-
             MatchAdvice::Win => match self {
                 Pick::Rock => Pick::Paper,
                 Pick::Paper => Pick::Scissors,
                 Pick::Scissors => Pick::Rock,
             },
-
             MatchAdvice::Loose => match self {
                 Pick::Rock => Pick::Scissors,
                 Pick::Paper => Pick::Rock,
