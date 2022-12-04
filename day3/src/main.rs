@@ -49,14 +49,14 @@ fn main() {
     let part_2: u32 = backpacks
         .chunks(3)
         .map(|members| {
-            let unique_items: Vec<HashSet<Item>> = members
+            let unique_items: Vec<HashSet<&Item>> = members
                 .iter()
-                .map(|backpack| HashSet::from_iter(backpack.iter().cloned()))
+                .map(|backpack| HashSet::from_iter(backpack.iter()))
                 .collect();
 
             unique_items[0]
                 .iter()
-                .find(|item| unique_items[1..].iter().all(|set| set.contains(item)))
+                .find(|item| unique_items[1..].iter().all(|set| set.contains(*item)))
                 .unwrap()
                 .priority
         })
